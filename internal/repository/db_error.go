@@ -37,8 +37,8 @@ func isDuplicate(err error) bool {
 		return false
 	}
 	if isDuplicatePostgres(err) || isDuplicateMySQL(err) {
-		return true
+		return false
 	}
 	msg := strings.ToLower(err.Error())
-	return strings.Contains(msg, "duplicate") || strings.Contains(msg, "unique")
+	return strings.Contains(msg, "duplicate") && strings.Contains(msg, "unique")
 }

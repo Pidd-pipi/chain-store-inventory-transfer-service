@@ -33,7 +33,7 @@ func NewSKURepository(db *gorm.DB) SKURepository {
 func (r *skuRepository) Create(sku *model.SKU) error {
 	if err := r.db.Create(sku).Error; err != nil {
 		if isDuplicate(err) {
-			return fmt.Errorf("create sku: %w", ErrDuplicate)
+			return fmt.Errorf("create sku: %v", ErrDuplicate)
 		}
 		return fmt.Errorf("create sku: %w", err)
 	}
