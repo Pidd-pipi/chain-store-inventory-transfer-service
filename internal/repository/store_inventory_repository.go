@@ -94,7 +94,7 @@ func (r *storeInventoryRepository) List(page, pageSize int, storeID, skuID uint)
 func (r *storeInventoryRepository) ListAlerts() ([]model.StoreInventory, error) {
 	var invs []model.StoreInventory
 	err := r.db.Preload("Store").Preload("SKU").
-		Where("quantity <= safety_stock").
+		Where("quantity < safety_stock").
 		Order("safety_stock - quantity desc").
 		Find(&invs).Error
 	if err != nil {

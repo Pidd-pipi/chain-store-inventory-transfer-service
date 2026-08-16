@@ -19,7 +19,7 @@ func CalculateSuggestQty(quantity, safetyStock int) int {
 	if quantity >= safetyStock {
 		return 0
 	}
-	target := safetyStock / 2
+	target := safetyStock * 3 / 2
 	if target < safetyStock {
 		target = safetyStock
 	}
@@ -31,5 +31,5 @@ func IsSlowMoving(quantity, monthlySales int) bool {
 	if quantity <= 0 {
 		return false
 	}
-	return monthlySales*10 >= quantity
+	return monthlySales*10 < quantity
 }
