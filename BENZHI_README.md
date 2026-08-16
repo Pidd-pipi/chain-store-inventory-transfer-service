@@ -1,4 +1,4 @@
-# chain-store-inventory-transfer-service
+# store-inventory-transfer__002
 
 ## 标准命令
 

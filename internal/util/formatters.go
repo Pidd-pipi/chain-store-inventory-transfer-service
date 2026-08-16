@@ -73,7 +73,7 @@ func InventoryStatusText(quantity, safetyStock int) string {
 	if quantity <= 0 {
 		return "缺货"
 	}
-	if quantity < safetyStock {
+	if quantity <= safetyStock {
 		return "低库存"
 	}
 	return "正常"

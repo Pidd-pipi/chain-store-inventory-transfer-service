@@ -153,8 +153,8 @@ func (s *stockRecordService) ReplenishSuggestions() ([]util.ReplenishSuggestion,
 			SkuID: sku.ID, SkuCode: sku.Code, SkuName: sku.Name,
 			StoreID: inv.StoreID, StoreName: storeName[inv.StoreID],
 			Quantity: inv.Quantity, SafetyStock: inv.SafetyStock,
-			SuggestQty: util.CalculateSuggestQty(inv.Quantity, inv.SafetyStock),
-			SlowMoving: util.IsSlowMoving(inv.Quantity, monthlySales),
+			SuggestQty: util.CalculateSuggestQty(inv.SafetyStock, inv.Quantity),
+			SlowMoving: util.IsSlowMoving(monthlySales, inv.Quantity),
 			Reason:     "低库存预警，建议补货至安全库存的1.5倍",
 		})
 	}
