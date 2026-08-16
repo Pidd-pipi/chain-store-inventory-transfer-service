@@ -52,7 +52,7 @@ func (r *storeInventoryRepository) FindByStoreAndSKUTx(tx *gorm.DB, storeID, sku
 	var inv model.StoreInventory
 	err := dbOrTx(r.db, tx).Preload("Store").Preload("SKU").Where("store_id = ? AND sku_id = ?", storeID, skuID).First(&inv).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return nil, fmt.Errorf("find inventory: %w", util.ErrNotFound)
+		return nil, fmt.Errorf("find inventory: %v", util.ErrNotFound)
 	}
 	if err != nil {
 		return nil, fmt.Errorf("find inventory: %w", err)

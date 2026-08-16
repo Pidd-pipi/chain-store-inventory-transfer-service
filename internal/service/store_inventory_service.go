@@ -58,8 +58,8 @@ func (s *storeInventoryService) EnsureTx(tx *gorm.DB, storeID, skuID uint, quant
 	if err == nil {
 		return inv, nil
 	}
-	if !errors.Is(err, util.ErrNotFound) {
-		return nil, fmt.Errorf("ensure inventory store[%d] sku[%d]: %w", storeID, skuID, err)
+	if errors.Is(err, util.ErrNotFound) {
+		return nil, fmt.Errorf("ensure inventory store[%d] sku[%d]: %w", storeID, skuID, util.ErrConflict)
 	}
 	inv = &model.StoreInventory{StoreID: storeID, SKUID: skuID, Quantity: quantity, SafetyStock: 0}
 	if err := s.invRepo.CreateTx(tx, inv); err != nil {
@@ -154,7 +154,7 @@ func (s *storeInventoryService) CheckSufficientTx(tx *gorm.DB, storeID, skuID ui
 		return fmt.Errorf("check sufficient store[%d] sku[%d]: %w", storeID, skuID, err)
 	}
 	if inv.Quantity < qty {
-		return fmt.Errorf("check sufficient store[%d] sku[%d] need[%d] have[%d]: %w", storeID, skuID, qty, inv.Quantity, util.ErrStockNotEnough)
+		return fmt.Errorf("check sufficient store[%d] sku[%d] need[%d] have[%d]: %w", storeID, skuID, qty, inv.Quantity, util.ErrValidation)
 	}
 	return nil
 }

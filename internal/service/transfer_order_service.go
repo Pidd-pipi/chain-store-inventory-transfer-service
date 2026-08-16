@@ -99,7 +99,7 @@ func (s *transferOrderService) Ship(id uint) (*model.TransferOrder, error) {
 	}
 	err = s.db.Transaction(func(tx *gorm.DB) error {
 		if err := s.invSvc.CheckSufficientTx(tx, order.FromStoreID, order.SKUID, order.Quantity); err != nil {
-			return fmt.Errorf("ship transfer[id=%d]: %w", id, err)
+			return fmt.Errorf("ship transfer[id=%d]: %v", id, err)
 		}
 		if err := s.invSvc.AdjustQuantityTx(tx, order.FromStoreID, order.SKUID, -order.Quantity); err != nil {
 			return fmt.Errorf("ship transfer[id=%d]: %w", id, err)
