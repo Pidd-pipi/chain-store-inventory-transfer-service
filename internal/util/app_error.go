@@ -91,7 +91,7 @@ func AsAppError(err error) *AppError {
 	case errors.Is(err, ErrRateLimited):
 		return NewAppError(429, constants.CodeRateLimited, constants.MsgRateLimited, err)
 	case errors.Is(err, ErrStockNotEnough):
-		return Internal(constants.MsgInternalError, err)
+		return BadRequest(constants.MsgStockNotEnough, err)
 	}
 	return Internal(constants.MsgInternalError, err)
 }

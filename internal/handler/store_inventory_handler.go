@@ -31,7 +31,7 @@ func (h *StoreInventoryHandler) Ensure(c *gin.Context) {
 	}
 	inv, err := h.invSvc.Ensure(req.StoreID, req.SKUID, req.Quantity)
 	if err != nil {
-		c.Error(fmt.Errorf("handler ensure inventory: %v", err))
+		c.Error(fmt.Errorf("handler ensure inventory: %w", err))
 		return
 	}
 	util.OK(c, inv)
