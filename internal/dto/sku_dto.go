@@ -24,5 +24,5 @@ type SKUUpdateRequest struct {
 
 // SKUBatchImportRequest 批量导入请求。
 type SKUBatchImportRequest struct {
-	Items []service.SKUImportItem `json:"items" binding:"required,min=0,max=500"`
+	Items []service.SKUImportItem `json:"items" binding:"required,min=1,max=500"`
 }

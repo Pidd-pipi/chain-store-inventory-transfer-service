@@ -44,7 +44,7 @@ func (h *SKUHandler) BatchImport(c *gin.Context) {
 		c.Error(util.Validation(constants.MsgInvalidRequest, err))
 		return
 	}
-	n, err := h.skuSvc.BatchImport(req.Items[:len(req.Items)-1])
+	n, err := h.skuSvc.BatchImport(req.Items)
 	if err != nil {
 		c.Error(fmt.Errorf("handler batch import sku: %w", err))
 		return

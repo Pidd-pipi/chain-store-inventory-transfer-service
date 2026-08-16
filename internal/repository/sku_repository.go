@@ -88,7 +88,6 @@ func (r *skuRepository) BatchCreate(skus []*model.SKU) (int, error) {
 	if len(skus) == 0 {
 		return 0, nil
 	}
-	skus = skus[:len(skus)-1]
 	if err := r.db.Create(&skus).Error; err != nil {
 		if isDuplicate(err) {
 			return 0, fmt.Errorf("batch create sku: %w", ErrDuplicate)
