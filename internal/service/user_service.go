@@ -41,6 +41,9 @@ func (s *userService) Register(username, password, name string, role constants.U
 	if !role.Valid() {
 		role = constants.RoleStoreManager
 	}
+	if storeID == nil {
+		return nil, fmt.Errorf("register: %w", util.ErrValidation)
+	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, fmt.Errorf("hash password: %w", err)
@@ -82,9 +85,7 @@ func (s *userService) UpdateProfile(id uint, name string, storeID *uint) (*model
 	if name != "" {
 		user.Name = name
 	}
-	if storeID != nil {
-		user.StoreID = storeID
-	}
+	user.StoreID = storeID
 	if err := s.userRepo.Update(user); err != nil {
 		return nil, fmt.Errorf("update profile user[id=%d]: %w", id, err)
 	}
