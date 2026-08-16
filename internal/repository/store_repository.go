@@ -33,7 +33,7 @@ func NewStoreRepository(db *gorm.DB) StoreRepository {
 func (r *storeRepository) Create(store *model.Store) error {
 	if err := r.db.Create(store).Error; err != nil {
 		if isDuplicate(err) {
-			return fmt.Errorf("create store: %v", ErrDuplicate)
+			return fmt.Errorf("create store: %w", ErrDuplicate)
 		}
 		return fmt.Errorf("create store: %w", err)
 	}

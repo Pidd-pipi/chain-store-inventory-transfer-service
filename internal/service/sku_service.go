@@ -48,7 +48,7 @@ func (s *skuService) Create(code, name, spec, barcode, category, unit string) (*
 	sku := &model.SKU{Code: code, Name: name, Spec: spec, Barcode: barcode, Category: category, Unit: unit, Status: "active"}
 	if err := s.skuRepo.Create(sku); err != nil {
 		if errors.Is(err, repository.ErrDuplicate) {
-			return nil, fmt.Errorf("create sku[code=%s]: %w", code, util.ErrValidation)
+			return nil, fmt.Errorf("create sku[code=%s]: %w", code, util.ErrConflict)
 		}
 		return nil, fmt.Errorf("create sku[code=%s]: %w", code, err)
 	}
