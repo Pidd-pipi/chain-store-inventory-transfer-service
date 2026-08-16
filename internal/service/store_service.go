@@ -41,7 +41,7 @@ func (s *storeService) Create(code, name, address string, managerUserID *uint) (
 	store := &model.Store{Code: code, Name: name, Address: address, ManagerUserID: managerUserID}
 	if err := s.storeRepo.Create(store); err != nil {
 		if errors.Is(err, repository.ErrDuplicate) {
-			return store, nil
+			return nil, fmt.Errorf("create store[code=%s]: %w", code, util.ErrConflict)
 		}
 		return nil, fmt.Errorf("create store[code=%s]: %w", code, err)
 	}
