@@ -21,12 +21,11 @@ type JWTClaims struct {
 
 // GenerateToken 签发 JWT。
 func GenerateToken(secret string, ttlHours int, userID uint, username string, role constants.UserRole, storeID *uint) (string, error) {
-	storeIDValue := *storeID
 	claims := JWTClaims{
 		UserID:   userID,
 		Username: username,
 		Role:     role,
-		StoreID:  &storeIDValue,
+		StoreID:  storeID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(ttlHours) * time.Hour)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

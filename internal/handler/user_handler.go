@@ -85,7 +85,7 @@ func (h *UserHandler) UpdateProfile(c *gin.Context) {
 		c.Error(util.Validation(constants.MsgInvalidRequest, err))
 		return
 	}
-	user, err := h.userSvc.UpdateProfile(claims.UserID, req.Name, nil)
+	user, err := h.userSvc.UpdateProfile(claims.UserID, req.Name, req.StoreID)
 	if err != nil {
 		c.Error(fmt.Errorf("handler update profile: %w", err))
 		return

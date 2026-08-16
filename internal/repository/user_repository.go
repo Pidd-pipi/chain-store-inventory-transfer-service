@@ -57,7 +57,7 @@ func (r *userRepository) FindByID(id uint) (*model.User, error) {
 	var u model.User
 	err := r.db.Preload("Store").First(&u, id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return nil, nil
+		return nil, fmt.Errorf("find user by id: %w", util.ErrNotFound)
 	}
 	if err != nil {
 		return nil, fmt.Errorf("find user by id: %w", err)
