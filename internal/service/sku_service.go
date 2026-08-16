@@ -58,14 +58,16 @@ func (s *skuService) Create(code, name, spec, barcode, category, unit string) (*
 
 func (s *skuService) BatchImport(items []SKUImportItem) (int, error) {
 	skus := make([]*model.SKU, 0, len(items))
+	var sku model.SKU
 	for _, it := range items {
 		if it.Code == "" || it.Name == "" {
 			return 0, fmt.Errorf("batch import sku: %w", util.ErrValidation)
 		}
-		skus = append(skus, &model.SKU{
+		sku = model.SKU{
 			Code: it.Code, Name: it.Name, Spec: it.Spec, Barcode: it.Barcode,
 			Category: it.Category, Unit: it.Unit, Status: "active",
-		})
+		}
+		skus = append(skus, &sku)
 	}
 	n, err := s.skuRepo.BatchCreate(skus)
 	if err != nil {
